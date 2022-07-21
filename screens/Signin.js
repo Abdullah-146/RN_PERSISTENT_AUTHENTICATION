@@ -5,6 +5,7 @@ import {
   Image,
   Pressable,
   TextInput,
+  Button,
 } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
@@ -12,14 +13,25 @@ import { Entypo, AntDesign } from "@expo/vector-icons";
 import { AuthCotext } from "../components/Context";
 import * as SQLite from "expo-sqlite";
 import axios from "axios";
+import { store, signIN } from "../redux/userSlice";
+import { Provider, useSelector, useDispatch } from "react-redux";
+import RNRestart from "react-native-restart";
 
 const Signin = () => {
   const [selectedTab, setselectedTab] = useState(true);
 
   const [Email, setEmail] = useState(null);
   const [Password, setPassword] = useState(null);
-  const { signIN } = useContext(AuthCotext);
+
+  const dispactch = useDispatch();
   ///database
+
+  let headers = {
+    "Access-Control-Allow-Headers": "*",
+    // "Access-Control-Allow-Origin": "*",
+  };
+
+  console.log(headers);
 
   const go = async () => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -35,7 +47,7 @@ const Signin = () => {
             if (res.data.data == null) {
               alert("Credentials not valid");
             } else if (res.data.data.user.email) {
-              signIN();
+              dispactch(signIN());
             } else {
               alert("Credentials not valid");
             }

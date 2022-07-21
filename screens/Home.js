@@ -8,7 +8,7 @@ console.log("hy");
 
 const Home = () => {
   const [array, setarray] = useState([]);
-  const { signOut } = useContext(AuthCotext);
+
   // useEffect(() => {
   //   const unsubscribe = () => {};
   //   return () => unsubscribe();
